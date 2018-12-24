@@ -1,0 +1,14 @@
+- set fact:
+    myvars: "{{ switchvars[inventory_hostname] }}"
+
+- name: Set up intefaces
+  nclu:
+      commands:
+          - add interface {{ myvars.INTS }} mtu 9216
+          - add loopback lo ip address {{ myvars.LOOPBACK }}
+
+- name: Configure NetQ
+  shell: |
+      netq config add server 10.255.7.3 vrf mgmt
+      netq config restart agent
+
