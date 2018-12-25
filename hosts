@@ -1,21 +1,21 @@
 [infra]
-cumulus-netq ansible_become_pass=CumulusLinux!
+cumulus-netq ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
 
 [spines]
-spine1 ansible_become_pass=CumulusLinux!
-spine2 ansible_become_pass=CumulusLinux!
+spine1 ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+spine2 ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
 
 [leaves]
-leaf1A ansible_become_pass=CumulusLinux!
-leaf1B ansible_become_pass=CumulusLinux!
-leaf2A ansible_become_pass=CumulusLinux!
-leaf2B ansible_become_pass=CumulusLinux!
-SL-A ansible_become_pass=CumulusLinux!
-SL-B ansible_become_pass=CumulusLinux!
+leaf1A ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+leaf1B ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+leaf2A ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+leaf2B ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+SL-A ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+SL-B ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
 
 [other-CL]
-external ansible_become_pass=CumulusLinux!
-firewall ansible_user=vagrant ansible_ssh_pass=vagrant ansible_become_pass=vagrant
+external ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
+firewall ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
 
 [hosts]
 host1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_become_pass=vagrant
