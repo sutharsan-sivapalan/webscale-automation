@@ -1,22 +1,23 @@
 ---
-#- hosts: network
-#  roles:
-#  - switch-int-netq
-#  - bgp-unnum
-
-#- hosts: leaves
-#  gather_facts: no
-#  roles:
-#  - clag-vxlan
-
-#- hosts: hosts
-#  gather_facts: no
-#  become: yes
-#  roles:
-#  - hosts
-
 - hosts: cumulus-netq
   gather_facts: no
   become: yes
   roles:
   - netq
+
+- hosts: network
+  gather_facts: no
+  roles:
+  - switch-int-netq
+  - bgp-unnum
+
+- hosts: leaves
+  gather_facts: no
+  roles:
+  - clag-vxlan
+
+- hosts: hosts
+  gather_facts: no
+  become: yes
+  roles:
+  - hosts

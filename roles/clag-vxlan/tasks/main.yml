@@ -1,3 +1,22 @@
+- set_fact:
+    device: "{{ swvars[inventory_hostname] }}"
+    mlag: "{{ swvars[inventory_hostname].mlag }}"
+    vlan: "{{ swvars[inventory_hostname].vlan }}"
+    vxlan: "{{ swvars[inventory_hostname].vxlan }}"
+
+- name: Set up CLAG
+  nclu:
+    template: |
+
+      {% if mlag.primary is defined %}
+      add clag peer sys-mac {{ mlag.sysmac }} interface {{ MLAGPL }} primary backup-ip {{ mlag.backupip }}
+      {% else %}
+      add clag peer sys-mac {{ mlag.sysmac }} interface {{ MLAGPL }} secondary backup-ip {{ mlag.backupip }}
+      {% endif %}
+
+      {% if mlag.name is defined %}
+      add bond {{ mlag.name }} bond slaves {{ mlag.slaves }}
+      add bond {{ mlag.name }} bridge access {{ mlag.vlan }}
       add bond {{ mlag.name }} clag id  {{ mlag.clagid }}
       add bond {{ mlag.name }} mtu 9216
       add bond {{ mlag.name }} stp bpduguard
