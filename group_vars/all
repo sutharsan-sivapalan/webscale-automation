@@ -1,85 +1,33 @@
-# Global MLAG parameters
-
-CLAG_PEER_BOND: 'peerlink'
-CLAG_PEER_IF:   '{{ CLAG_PEER_BOND }}.4094'
-CLAG_PEER_INTS: 'swp7,swp8'
-
-
-# Node specific  variables
-
-swvars:
-
-    spine1:
-        LOOPBACK: 1.1.1.1/32
-        ASN: 65001
-        INTS: 'swp1-6'
-
-    spine2:
-        LOOPBACK: 2.2.2.2/32
-        ASN: 65002
-        INTS: 'swp1-6'
-
-    leaf1A:
-        LOOPBACK: 11.11.11.11/32
-        ASN: 65011
-        INTS: 'swp1-2,7-8,swp9s0'
-        MLAG_SYS_MAC: 44:38:39:FF:40:01
-        MLAG_PL_IP: 169.254.1.1/30
-        MLAG_P_IP: 169.254.1.2
-        MLAG_BACKUP: 22.22.22.22
-
-    leaf1B:
-        LOOPBACK: 22.22.22.22/32
-        ASN: 65022
-        INTS: 'swp1-2,7-8,swp9s0'
-        MLAG_SYS_MAC: 44:38:39:FF:40:01
-        MLAG_PL_IP: 169.254.1.2/30
-        MLAG_P_IP: 169.254.1.1
-        MLAG_BACKUP: 11.11.11.11
-
-    leaf2A:
-        LOOPBACK: 33.33.33.33/32
-        ASN: 65033
-        INTS: 'swp1-2,7-8,swp9s0'
-        MLAG_SYS_MAC: 44:38:39:FF:40:02
-        MLAG_PL_IP: 169.254.1.1/30
-        MLAG_P_IP: 169.254.1.2
-        MLAG_BACKUP: 44.44.44.44
-
-    leaf2B:
-        LOOPBACK: 44.44.44.44/32
-        ASN: 65044
-        INTS: 'swp1-2,7-8,swp9s0'
-        MLAG_SYS_MAC: 44:38:39:FF:40:02
-        MLAG_PL_IP: 169.254.1.2/30
-        MLAG_P_IP: 169.254.1.1
-        MLAG_BACKUP: 33.33.33.33
-
-    SL-A:
-        LOOPBACK: 55.55.55.55/32
-        ASN: 65055
-        INTS: 'swp1-3,7-9'
-        MLAG_SYS_MAC: 44:38:39:FF:40:03
-        MLAG_PL_IP: 169.254.1.1/30
-        MLAG_P_IP: 169.254.1.2
-        MLAG_BACKUP: 66.66.66.66
-
-    SL-B:
-        LOOPBACK: 66.66.66.66/32
-        ASN: 65066
-        INTS: 'swp1-3,7-9'
-        MLAG_SYS_MAC: 44:38:39:FF:40:03
-        MLAG_PL_IP: 169.254.1.2/30
-        MLAG_P_IP: 169.254.1.1
-        MLAG_BACKUP: 55.55.55.55
+            otherints: 'swp3,swp9'
+        mlag:
+            sysmac: '44:38:39:FF:40:03'
+            backupip: '55.55.55.55'
+        vlan:
+            100: 10.100.1.7/24
+            200: 10.200.1.7/24
+        vxlan:
+            anycastip: '10.10.10.56/32'
+            vtep: 'yes'
+            vnis:
+                vxlan10100:
+                    id: 10100
+                    vlan: 100
+                vxlan10200:
+                    id: 10200
+                    vlan: 200
 
     firewall:
-        LOOPBACK: 111.111.111.111/32
-        ASN: 65111
-        INTS: 'swp1-2'
+        loopback: 111.111.111.111/32
+        ints: 'swp1-2'
+        bgp:
+            asn: 65111
+            otherints: 'swp1-2'
+        vxlan:
 
     external:
-        LOOPBACK: 90.90.90.90/32
-        ASN: 65090
-        INTS: 'swp1-2'
-
+        loopback: 90.90.90.90/32
+        ints: 'swp1-2'
+        bgp:
+            asn: 65090
+            otherints: 'swp1-2'
+        vxlan:

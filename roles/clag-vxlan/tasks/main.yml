@@ -1,0 +1,33 @@
+      add bond {{ mlag.name }} clag id  {{ mlag.clagid }}
+      add bond {{ mlag.name }} mtu 9216
+      add bond {{ mlag.name }} stp bpduguard
+      add bond {{ mlag.name }} stp portadminedge
+      {% endif %}
+
+    atomic: true
+
+
+- name: Set up VXLAN
+  nclu:
+    template: |
+
+      {% if vxlan.vnis is defined %}
+      {% for x in vxlan.vnis %}
+      add vxlan {{ x }} vxlan id {{ vxlan.vnis[x].id }}
+      add vxlan {{ x }} vxlan local-tunnel {{ device.loopback|replace("/32", "") }}
+      add vxlan {{ x }} bridge access {{ vxlan.vnis[x].vlan }}
+      add vxlan {{ x }} bridge learning off
+      add vxlan {{ x }} bridge arp-nd-suppress on
+      {% endfor %}
+      {% endif %}
+
+      add loopback lo clag vxlan-anycast-ip {{ vxlan.anycastip|replace("/32", "") }}
+
+      {% if vxlan.vtep == 'yes' %}
+      add vlan 100 ip address-virtual 00:00:5E:00:01:01 10.1.100.1/24
+      add vlan 200 ip address-virtual 00:00:5E:00:01:02 10.1.200.1/24
+      add vlan 100 ip address {{ vlan.100 }}
+      add vlan 200 ip address {{ vlan.200 }}
+      {% endif %}
+
+    atomic: true

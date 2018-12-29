@@ -18,8 +18,8 @@ external ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass
 firewall ansible_user=cumulus ansible_ssh_pass=CumulusLinux! ansible_become_pass=CumulusLinux!
 
 [hosts]
-host1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_become_pass=vagrant
-host2 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_become_pass=vagrant
+host1 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_become_pass=vagrant ansible_python_interpreter=/usr/bin/python2.7
+host2 ansible_user=vagrant ansible_ssh_pass=vagrant ansible_become_pass=vagrant ansible_python_interpreter=/usr/bin/python2.7
 
 [network:children]
 spines
