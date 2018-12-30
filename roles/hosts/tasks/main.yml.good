@@ -20,17 +20,12 @@
     ifdown eth1 && ifup eth1
     ifdown eth2 && ifup eth2
 
-- name: Create new file for NetQ and RoH sources
-  copy:
-    dest: "/etc/apt/sources.list.d/cumulus-apps-deb-xenial.list"
-    content: |
-        deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial netq-latest
-        deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial roh-3
+- name: Update sources.list for NetQ and RoH
+  shell: |
 
-- name: Reference and update local apt repository
-  apt_key:
-    url: https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey
-    state: present
+    wget -O- https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey | apt-key add -
+
+    printf "deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial netq-latest\ndeb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial roh-3\n" > /etc/apt/sources.list.d/cumulus-apps-deb-xenial.list
 
 - name: Update repositories cache and install NTP
   apt:
