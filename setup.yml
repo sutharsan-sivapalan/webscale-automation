@@ -13,6 +13,7 @@
 
 - hosts: leaves
   gather_facts: no
+  become: yes
   roles:
   - clag-vxlan
 
