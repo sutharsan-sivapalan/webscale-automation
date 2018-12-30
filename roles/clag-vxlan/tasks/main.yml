@@ -50,3 +50,9 @@
       {% endif %}
 
     atomic: true
+
+
+- name: Restart CLAG
+  systemd:
+      state: restarted
+      name: clagd.service
